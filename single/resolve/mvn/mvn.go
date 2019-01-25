@@ -18,7 +18,7 @@ package mvn
 import (
 	"regexp"
 
-	"github.com/venicegeo/vzutil-versioning/single/util"
+	"github.com/radiant-maxar/vzutil-versioning/single/util"
 )
 
 type MvnDependency struct {

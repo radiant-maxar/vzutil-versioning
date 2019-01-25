@@ -20,7 +20,7 @@ import (
 	"reflect"
 	"strings"
 
-	lan "github.com/venicegeo/vzutil-versioning/common/language"
+	lan "github.com/radiant-maxar/vzutil-versioning/common/language"
 )
 
 const NameField = `name`

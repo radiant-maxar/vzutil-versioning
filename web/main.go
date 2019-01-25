@@ -18,9 +18,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/radiant-maxar/vzutil-versioning/web/app"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
 	"github.com/venicegeo/pz-gocommon/elasticsearch"
-	"github.com/venicegeo/vzutil-versioning/web/app"
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
 )
 
 func main() {

@@ -20,9 +20,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
-	"github.com/venicegeo/vzutil-versioning/web/es"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	"github.com/radiant-maxar/vzutil-versioning/web/es"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
 )
 
 func (a *Application) searchForDep(c *gin.Context) {

@@ -21,12 +21,12 @@ import (
 	"sync"
 
 	"github.com/gin-gonic/gin"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
+	"github.com/radiant-maxar/vzutil-versioning/web/es"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	"github.com/venicegeo/pz-gocommon/elasticsearch/elastic-5-api"
 	nt "github.com/venicegeo/pz-gocommon/gocommon"
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
-	"github.com/venicegeo/vzutil-versioning/web/es"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
 )
 
 func (a *Application) viewProject(c *gin.Context) {

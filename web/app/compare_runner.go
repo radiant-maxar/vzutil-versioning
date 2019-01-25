@@ -18,7 +18,7 @@ import (
 	"encoding/json"
 	"os/exec"
 
-	com "github.com/venicegeo/vzutil-versioning/common"
+	com "github.com/radiant-maxar/vzutil-versioning/common"
 )
 
 type CompareRunner struct {

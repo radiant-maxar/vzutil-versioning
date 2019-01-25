@@ -19,8 +19,8 @@ import (
 	"strings"
 	"time"
 
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	nt "github.com/venicegeo/pz-gocommon/gocommon"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
 )
 
 func GetBranchSha(name, fullName, branch string) (string, error) {

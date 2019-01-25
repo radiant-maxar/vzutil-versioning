@@ -20,7 +20,7 @@ import (
 	"html/template"
 	"sort"
 
-	u "github.com/venicegeo/vzutil-versioning/web/util"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
 type HtmlAccordion struct {

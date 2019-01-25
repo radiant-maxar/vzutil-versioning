@@ -19,12 +19,12 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/radiant-maxar/vzutil-versioning/common/table"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
+	"github.com/radiant-maxar/vzutil-versioning/web/es"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	p "github.com/venicegeo/pz-gocommon/gocommon"
-	"github.com/venicegeo/vzutil-versioning/common/table"
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
-	"github.com/venicegeo/vzutil-versioning/web/es"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
 )
 
 func (a *Application) projectsOverview(c *gin.Context) {

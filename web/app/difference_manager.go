@@ -21,12 +21,12 @@ import (
 	"strings"
 	"time"
 
-	c "github.com/venicegeo/vzutil-versioning/common"
-	t "github.com/venicegeo/vzutil-versioning/common/table"
-	"github.com/venicegeo/vzutil-versioning/compare/pub"
-	"github.com/venicegeo/vzutil-versioning/web/es"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
+	c "github.com/radiant-maxar/vzutil-versioning/common"
+	t "github.com/radiant-maxar/vzutil-versioning/common/table"
+	"github.com/radiant-maxar/vzutil-versioning/compare/pub"
+	"github.com/radiant-maxar/vzutil-versioning/web/es"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
 type DifferenceManager struct {

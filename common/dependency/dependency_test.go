@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/venicegeo/vzutil-versioning/project/language"
+	"github.com/radiant-maxar/vzutil-versioning/project/language"
 )
 
 var testName, testVersion, testProject, testUnknown = "foo", "1.0.0", "bar", "Unknown"

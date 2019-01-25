@@ -16,8 +16,8 @@ limitations under the License.
 package resolve
 
 import (
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
-	i "github.com/venicegeo/vzutil-versioning/common/issue"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	i "github.com/radiant-maxar/vzutil-versioning/common/issue"
 )
 
 type FileReader func(string) ([]byte, error)

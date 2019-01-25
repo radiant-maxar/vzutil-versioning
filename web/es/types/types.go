@@ -18,7 +18,7 @@ import (
 	"regexp"
 	"time"
 
-	c "github.com/venicegeo/vzutil-versioning/common"
+	c "github.com/radiant-maxar/vzutil-versioning/common"
 )
 
 var escape = regexp.MustCompile(`[^a-zA-Z\-_]`)

@@ -18,7 +18,7 @@ package com
 import (
 	"time"
 
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
 )
 
 const FullNameField = `full_name`

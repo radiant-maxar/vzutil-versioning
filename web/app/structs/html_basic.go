@@ -17,7 +17,7 @@ package structs
 import (
 	"html/template"
 
-	f "github.com/venicegeo/vzutil-versioning/web/util"
+	f "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
 type HtmlBasic struct {

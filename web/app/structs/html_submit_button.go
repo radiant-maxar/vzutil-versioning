@@ -18,7 +18,7 @@ import (
 	"html/template"
 	"strings"
 
-	f "github.com/venicegeo/vzutil-versioning/web/util"
+	f "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
 type HtmlSubmitButton struct {

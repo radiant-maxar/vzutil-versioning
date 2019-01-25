@@ -21,11 +21,11 @@ import (
 	"sort"
 
 	"github.com/gin-gonic/gin"
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
-	"github.com/venicegeo/vzutil-versioning/common/table"
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	"github.com/radiant-maxar/vzutil-versioning/common/table"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
 func (a *Application) reportRefOnProject(c *gin.Context) {

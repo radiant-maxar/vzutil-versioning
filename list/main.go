@@ -29,9 +29,9 @@ import (
 	"strconv"
 	"strings"
 
-	com "github.com/venicegeo/vzutil-versioning/common"
-	deps "github.com/venicegeo/vzutil-versioning/common/dependency"
-	lan "github.com/venicegeo/vzutil-versioning/common/language"
+	com "github.com/radiant-maxar/vzutil-versioning/common"
+	deps "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	lan "github.com/radiant-maxar/vzutil-versioning/common/language"
 )
 
 var codeRE = regexp.MustCompile(`^(?:[0-9]|[a-z]|[A-Z]){4}$`)

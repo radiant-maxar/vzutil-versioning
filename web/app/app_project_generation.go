@@ -20,10 +20,10 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	h "github.com/radiant-maxar/vzutil-versioning/web/app/helpers"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	nt "github.com/venicegeo/pz-gocommon/gocommon"
-	h "github.com/venicegeo/vzutil-versioning/web/app/helpers"
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
 )
 
 func (a *Application) webhookPath(c *gin.Context) {

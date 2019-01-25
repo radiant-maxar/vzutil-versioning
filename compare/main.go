@@ -25,9 +25,9 @@ import (
 	"sort"
 	"strings"
 
-	com "github.com/venicegeo/vzutil-versioning/common"
-	"github.com/venicegeo/vzutil-versioning/common/table"
-	c "github.com/venicegeo/vzutil-versioning/compare/pub"
+	com "github.com/radiant-maxar/vzutil-versioning/common"
+	"github.com/radiant-maxar/vzutil-versioning/common/table"
+	c "github.com/radiant-maxar/vzutil-versioning/compare/pub"
 )
 
 var re = regexp.MustCompile(``)

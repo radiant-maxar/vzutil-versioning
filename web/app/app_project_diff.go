@@ -16,7 +16,7 @@ package app
 
 import (
 	"github.com/gin-gonic/gin"
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
 )
 
 func (a *Application) differencesInProject(c *gin.Context) {

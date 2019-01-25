@@ -21,10 +21,10 @@ import (
 	"strings"
 	"time"
 
+	c "github.com/radiant-maxar/vzutil-versioning/common"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	nt "github.com/venicegeo/pz-gocommon/gocommon"
-	c "github.com/venicegeo/vzutil-versioning/common"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
 )
 
 type SingleRunner struct {
