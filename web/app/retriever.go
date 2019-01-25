@@ -19,11 +19,11 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/radiant-maxar/vzutil-versioning/web/es"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	"github.com/venicegeo/pz-gocommon/elasticsearch"
 	nt "github.com/venicegeo/pz-gocommon/gocommon"
-	"github.com/venicegeo/vzutil-versioning/web/es"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
 )
 
 type Retriever struct {

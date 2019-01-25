@@ -20,9 +20,9 @@ import (
 	"regexp"
 	"sort"
 
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
-	i "github.com/venicegeo/vzutil-versioning/common/issue"
-	lan "github.com/venicegeo/vzutil-versioning/common/language"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	i "github.com/radiant-maxar/vzutil-versioning/common/issue"
+	lan "github.com/radiant-maxar/vzutil-versioning/common/language"
 	"gopkg.in/yaml.v2"
 )
 

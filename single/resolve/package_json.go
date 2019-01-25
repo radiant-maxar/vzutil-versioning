@@ -23,9 +23,9 @@ import (
 	"sort"
 	"strings"
 
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
-	i "github.com/venicegeo/vzutil-versioning/common/issue"
-	lan "github.com/venicegeo/vzutil-versioning/common/language"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	i "github.com/radiant-maxar/vzutil-versioning/common/issue"
+	lan "github.com/radiant-maxar/vzutil-versioning/common/language"
 )
 
 var package_gitRE = regexp.MustCompile(`^git(?:(?:\+(?:https)|(?:ssh))|(?:\+ssh))*:\/\/(?:git\.)*github\.com\/.+\/.+\.git(?:#(.+))?`)

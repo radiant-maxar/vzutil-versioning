@@ -23,9 +23,9 @@ import (
 	"regexp"
 
 	"github.com/gin-gonic/gin"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	"github.com/venicegeo/pz-gocommon/elasticsearch"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
 )
 
 type Application struct {

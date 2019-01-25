@@ -16,7 +16,7 @@ limitations under the License.
 package resolve
 
 import (
-	i "github.com/venicegeo/vzutil-versioning/common/issue"
+	i "github.com/radiant-maxar/vzutil-versioning/common/issue"
 )
 
 type ProjectWrapper struct {

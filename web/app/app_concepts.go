@@ -19,9 +19,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	h "github.com/venicegeo/vzutil-versioning/common/history"
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
+	h "github.com/radiant-maxar/vzutil-versioning/common/history"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
 func (a *Application) projectConcept(c *gin.Context) {

@@ -19,9 +19,9 @@ import (
 	"log"
 	"sync"
 
-	h "github.com/venicegeo/vzutil-versioning/common/history"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
-	u "github.com/venicegeo/vzutil-versioning/web/util"
+	h "github.com/radiant-maxar/vzutil-versioning/common/history"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
+	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
 type Worker struct {

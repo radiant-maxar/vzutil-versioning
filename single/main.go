@@ -29,12 +29,12 @@ import (
 	"syscall"
 	"time"
 
-	com "github.com/venicegeo/vzutil-versioning/common"
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
-	h "github.com/venicegeo/vzutil-versioning/common/history"
-	i "github.com/venicegeo/vzutil-versioning/common/issue"
-	r "github.com/venicegeo/vzutil-versioning/single/resolve"
-	"github.com/venicegeo/vzutil-versioning/single/util"
+	com "github.com/radiant-maxar/vzutil-versioning/common"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	h "github.com/radiant-maxar/vzutil-versioning/common/history"
+	i "github.com/radiant-maxar/vzutil-versioning/common/issue"
+	r "github.com/radiant-maxar/vzutil-versioning/single/resolve"
+	"github.com/radiant-maxar/vzutil-versioning/single/util"
 )
 
 type stringarr []string

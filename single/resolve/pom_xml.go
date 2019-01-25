@@ -24,11 +24,11 @@ import (
 	"sort"
 	"strings"
 
-	d "github.com/venicegeo/vzutil-versioning/common/dependency"
-	i "github.com/venicegeo/vzutil-versioning/common/issue"
-	lan "github.com/venicegeo/vzutil-versioning/common/language"
-	"github.com/venicegeo/vzutil-versioning/single/resolve/mvn"
-	"github.com/venicegeo/vzutil-versioning/single/util"
+	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
+	i "github.com/radiant-maxar/vzutil-versioning/common/issue"
+	lan "github.com/radiant-maxar/vzutil-versioning/common/language"
+	"github.com/radiant-maxar/vzutil-versioning/single/resolve/mvn"
+	"github.com/radiant-maxar/vzutil-versioning/single/util"
 )
 
 //TODO fix this array stuff

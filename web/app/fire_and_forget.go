@@ -18,9 +18,9 @@ import (
 	"encoding/json"
 	"log"
 
-	s "github.com/venicegeo/vzutil-versioning/web/app/structs"
-	"github.com/venicegeo/vzutil-versioning/web/es"
-	"github.com/venicegeo/vzutil-versioning/web/es/types"
+	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
+	"github.com/radiant-maxar/vzutil-versioning/web/es"
+	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
 )
 
 type FireAndForget struct {
