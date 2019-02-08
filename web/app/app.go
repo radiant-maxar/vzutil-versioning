@@ -23,6 +23,7 @@ import (
 	"regexp"
 
 	"github.com/gin-gonic/gin"
+	h "github.com/radiant-maxar/vzutil-versioning/common/history"
 	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
 	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 	"github.com/venicegeo/pz-gocommon/elasticsearch"
@@ -55,13 +56,15 @@ const ESMapping = `
 		"` + RepositoryEntryType + `": ` + types.ScanMapping + `,
 		"` + DifferenceType + `": ` + DifferenceMapping + `,
 		"` + RepositoryType + `": ` + types.RepositoryMapping + `,
-		"` + ProjectType + `": ` + types.ProjectMapping + `
+		"` + ProjectType + `": ` + types.ProjectMapping + `,
+		"` + HistoryType + `": ` + h.HistoryMapping + `
 	}
 }`
 const RepositoryEntryType = `repository_entry`
 const DifferenceType = `difference`
 const RepositoryType = `repository`
 const ProjectType = `project`
+const HistoryType = `history`
 
 type Back struct {
 	BackButton string `form:"button_back"`

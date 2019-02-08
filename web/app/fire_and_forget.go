@@ -78,6 +78,10 @@ func (ff *FireAndForget) FireGit(git *s.GitWebhook) {
 					if repo, _, err := ff.app.rtrvr.GetRepository(git.Repository.FullName, p); err != nil {
 						log.Println("FAILED TO GET THE REPO INSTANCE UNDER", p)
 					} else {
+						if tree, err := ff.app.wrkr.History(repo.Fullname); err != nil {
+							// TODO UNTESTED
+							ff.app.index.PostData(HistoryType, repo.Id, tree)
+						}
 						go fire(git, repo)
 					}
 				}(p)

@@ -26,6 +26,11 @@ const (
 	DOWN
 )
 
+const HistoryMapping = `{
+	"dynamic": false,
+	"enabled": false
+}`
+
 type HistoryTree map[string]*HistoryNode
 
 type HistoryNode struct {

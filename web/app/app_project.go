@@ -315,9 +315,21 @@ func (a *Application) addRepoToProject(c *gin.Context) {
 			c.String(400, "This repo already exists under this project")
 			return
 		}
+		tree, err := a.wrkr.History(repoName)
+		if err != nil {
+			c.String(400, "Error creating history tree: %s\n", err.Error())
+			return
+		}
+
 		iresp, err := a.index.PostData(RepositoryType, id, entry)
 		if err != nil || !iresp.Created {
-			c.String(500, "Error adding entry to database: ", err)
+			c.String(500, "Error adding entry to database: %s", err.Error())
+			return
+		}
+		iresp, err = a.index.PostData(HistoryType, id, tree)
+		if err != nil || !iresp.Created {
+			a.index.DeleteByID(RepositoryType, id)
+			c.String(500, "Error adding history to database: %s", err.Error())
 			return
 		}
 		c.Redirect(303, "/project/"+projId)

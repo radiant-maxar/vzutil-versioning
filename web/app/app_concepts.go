@@ -15,6 +15,7 @@
 package app
 
 import (
+	"encoding/json"
 	"math"
 	"sort"
 	"strings"
@@ -230,9 +231,14 @@ func (a *Application) repoConcept(c *gin.Context) {
 	}
 	nodes := []*VNode{}
 	edges := []VEdge{}
-	tree, err := a.wrkr.History("venicegeo/pz-gateway")
-	if err != nil {
-		c.String(400, "Error creating history tree: %s\n", err.Error())
+	treeResp, err := a.index.GetByID(HistoryType, repoId)
+	if err != nil || !treeResp.Found {
+		c.String(400, "Error retrieving history tree: %s\n", err.Error())
+		return
+	}
+	var tree h.HistoryTree
+	if err := json.Unmarshal(*(treeResp.Source), &tree); err != nil {
+		c.String(500, "Error unmarshalling history tree: %s", err.Error())
 		return
 	}
 
