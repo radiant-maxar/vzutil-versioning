@@ -110,7 +110,7 @@ func (server *Server) Configure(templateLocation string, staticLocation string, 
 	}
 
 	//router.NoRoute(server.noRoute)
-	router.Static("/"+staticLocation, "./"+staticLocation)
+	router.Static("/s", "./"+staticLocation)
 
 	if !strings.HasSuffix(templateLocation, "/") {
 		templateLocation += "/"

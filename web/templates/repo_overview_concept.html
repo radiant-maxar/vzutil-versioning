@@ -1,9 +1,11 @@
 <!DOCTYPE>
 <html>
 	<head>
-		<script src="../static/vis-network-custom.min.js"></script>
-		<link href="../static/vis-network-custom.min.css" rel="stylesheet" type="text/css" />
-		<script src="../static/jquery-3.3.1.min.js"></script>
+		<script src="/s/vis-network.min.js"></script>
+		<link href="/s/vis-network.min.css" rel="stylesheet" type="text/css" />
+		<script src="/s/vis.min.js"></script>
+		<link href="/s/vis.min.css" rel="stylesheet" type="text/css" />
+		<script src="/s/jquery-3.3.1.min.js"></script>
 
 		<style type="text/css">
 			#mynetwork {
@@ -18,15 +20,66 @@
 			body {
 				min-height: 100%;
 			}
+
+			td {
+				vertical-align: top;
+			}
+
+			#all_shas {
+				list-style-type: none;
+			}
+
+			nav ol {
+				height: 100px;
+				overflow-y:scroll;
+			}
+
 		</style>
 	</head>
 
 	<body>
 		<form id="shaform">
+			<input type="submit" name="button_back" id="button_back" value="Back">
+			<input type="submit" name="button_refresh" id="button_refresh" value="Refresh">
 			<input type="hidden" name="sha" id="sha" value="">
 		</form>
 
+<table>
+<tr>
+<td>
+<div id="search">
+<input type="text" id="search_input" onkeyup="filterFunc()" placeholder="Search for sha.." title="Type in a name">
+<form id="shaform">
+<nav>
+{{ .all_shas }}
+</nav>
+</form>
+</div>
+</td>
+<td>
 		<div id="mynetwork"></div>
+</td>
+</tr>
+</table>
+
+<script>
+function filterFunc() {
+    var input, filter, ol, li, a, i, txtValue;
+    input = document.getElementById("search_input");
+    filter = input.value.toLowerCase();
+    ol = document.getElementById("all_shas");
+    li = ol.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("input")[0];
+        txtValue = a.value;
+        if (txtValue.indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
 
 		<script type="text/javascript">
 			//var nodeSize = 70;
@@ -192,10 +245,10 @@
 					post(obj.nodes[0]);
 			});
 
-
 			  
 			function resizeCanvas () {
 				$('#mynetwork').height($('body').height()-20)
+				$('#all_shas').height($('body').height()-20)
 			}
 	
 			function updateBounds() {
@@ -241,5 +294,7 @@
 			lastView = network.getViewPosition();
 
 		</script>
+
+		{{ .alert }}
 	</body>
 </html>

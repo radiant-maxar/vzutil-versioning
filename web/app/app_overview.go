@@ -254,7 +254,7 @@ func (a *Application) reportSha(c *gin.Context) {
 		if scan == nil {
 			return "Generating this sha resulted in an unknown error"
 		}
-		return a.reportAtShaWrk(scan)
+		return a.frmttr.formatReportBySha(scan)
 	}
 	files := s.NewHtmlCollection()
 	for _, f := range form.Files {

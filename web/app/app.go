@@ -42,6 +42,7 @@ type Application struct {
 	diffMan  *DifferenceManager
 	ff       *FireAndForget
 	cmprRnnr *CompareRunner
+	frmttr   *Formatter
 
 	killChan chan bool
 
@@ -90,6 +91,7 @@ func (a *Application) StartInternals() {
 	a.rtrvr = NewRetriever(a)
 	a.ff = NewFireAndForget(a)
 	a.cmprRnnr = NewCompareRunner(a)
+	a.frmttr = NewFormatter(a)
 
 	a.wrkr.Start()
 
@@ -125,7 +127,8 @@ func (a *Application) StartInternals() {
 		u.RouteData{"POST", "/cdiff", a.customDiff, true},
 
 		//concepts
-		u.RouteData{"GET", "/repoconcept", a.repoConcept, false},
+		u.RouteData{"GET", "/repoconcept/:proj/:repo", a.repoConcept, true},
+		u.RouteData{"GET", "/repoconcept/:proj/:repo/:sha", a.repoShowSha, true},
 		u.RouteData{"GET", "/project/:proj", a.projectConcept, true},
 		u.RouteData{"GET", "/repoTemp/:proj/:repo", a.repoTemp, true},
 		u.RouteData{"POST", "/repoTemp/:proj/:repo", a.repoTemp, true},
