@@ -90,7 +90,7 @@ func (a *Application) viewProject(c *gin.Context) {
 			c.String(500, "Unable to obtain the results: %s", err.Error())
 			return
 		}
-		depsStr = a.reportAtShaWrk(scan)
+		depsStr = a.frmttr.formatReportBySha(scan)
 	} else if form.Gen != "" {
 		repoFullName := strings.TrimPrefix(form.Gen, "Generate Branch - ")
 		c.Redirect(303, u.Format("/genbranch/%s/%s", projId, repoFullName))

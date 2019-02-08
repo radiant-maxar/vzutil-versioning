@@ -16,11 +16,14 @@ package app
 
 import (
 	"math"
+	"sort"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	h "github.com/radiant-maxar/vzutil-versioning/common/history"
 	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
+	"github.com/radiant-maxar/vzutil-versioning/web/es"
+	t "github.com/radiant-maxar/vzutil-versioning/web/es/types"
 	u "github.com/radiant-maxar/vzutil-versioning/web/util"
 )
 
@@ -83,7 +86,7 @@ func (a *Application) projectConcept(c *gin.Context) {
 			alert.SetValue(`alert("Unknown util method");`)
 		}
 	} else if form.Repo != "" {
-		c.Redirect(303, "/repoTemp/"+projId+"/"+form.Repo) //TODO
+		c.Redirect(303, u.Format("/repoconcept/%s/%s", projId, form.Repo)) //TODO
 		return
 	}
 
@@ -162,12 +165,52 @@ func (a *Application) repoTemp(c *gin.Context) {
 }
 
 func (a *Application) repoConcept(c *gin.Context) {
-	var temp struct {
-		Sha string `form:"sha"`
+	projId := c.Param("proj")
+	repoId := c.Param("repo")
+	var form struct {
+		Sha     string `form:"sha"`
+		Back    string `form:"button_back"`
+		Refresh string `form:"button_refresh"`
 	}
-	if err := c.Bind(&temp); err != nil {
+	if err := c.Bind(&form); err != nil {
 		c.String(400, "Error binding form: %s", err.Error())
 		return
+	}
+	if form.Back != "" {
+		c.Redirect(303, "/project/"+projId)
+		return
+	} else if form.Refresh != "" {
+		c.Redirect(303, u.Format("/repoconcept/%s/%s", projId, repoId))
+		return
+	}
+
+	checkScanExists := func(sha string) (bool, error) {
+		resp, err := a.index.SearchByJSON(RepositoryEntryType, map[string]interface{}{
+			"query": map[string]interface{}{
+				"bool": es.NewBool().SetMust(es.NewBoolQ(es.NewTerm(t.Scan_ProjectIdField, projId), es.NewTerm(t.Scan_ShaField, sha))),
+			},
+		})
+		return resp.Hits.TotalHits == 1, err
+	}
+
+	alert := s.NewHtmlBasic("script", "")
+
+	if form.Sha != "" {
+		exists, err := checkScanExists(form.Sha)
+		if err != nil {
+			alert.SetValue(`alert("An error occuring checking for this scan. Too scared to generate it.");`)
+		} else if !exists {
+			repo, _, err := a.rtrvr.GetRepositoryById(repoId, projId)
+			if err != nil {
+				c.String(400, "Error find this repository: %s", err.Error())
+				return
+			}
+			a.ff.FireRequest(&SingleRunnerRequest{repo, form.Sha, ""})
+			alert.SetValue(`alert("A scan does not exist for this sha, generating that now. Try refreshing in a few minutes.");`)
+		} else {
+			c.Redirect(303, u.Format("/repoconcept/%s/%s/%s", projId, repoId, form.Sha))
+			return
+		}
 	}
 
 	type VNode struct {
@@ -185,12 +228,22 @@ func (a *Application) repoConcept(c *gin.Context) {
 		Arrows string `json:"arrows"`
 		Hidden bool   `json:"hidden"`
 	}
-	nodes := []VNode{}
+	nodes := []*VNode{}
 	edges := []VEdge{}
 	tree, err := a.wrkr.History("venicegeo/pz-gateway")
 	if err != nil {
 		c.String(400, "Error creating history tree: %s\n", err.Error())
 		return
+	}
+
+	allShas := make([]string, 0, len(tree))
+	for s, _ := range tree {
+		allShas = append(allShas, s)
+	}
+	sort.Strings(allShas)
+	allShasHtml := s.NewHtmlOrderedList("all_shas")
+	for _, sha := range allShas {
+		allShasHtml.Add(s.NewHtmlSubmitButton2("sha", sha).Template())
 	}
 
 	leafs := tree.GetLeafs()
@@ -224,7 +277,7 @@ func (a *Application) repoConcept(c *gin.Context) {
 	}
 
 	sub.ReverseWeights(max)
-	var tempNode VNode
+	var tempNode *VNode
 	var tempName string = ""
 	var tempXOffset int
 	knownBranches := map[string]int{}
@@ -243,7 +296,7 @@ func (a *Application) repoConcept(c *gin.Context) {
 		if tempXOffset*200 > maxXOffset {
 			maxXOffset = tempXOffset * 200
 		}
-		tempNode = VNode{n.Sha, n.Sha[:7], tempName, n.Weight, "good", tempXOffset * 200, n.Weight * -150}
+		tempNode = &VNode{n.Sha, n.Sha[:7], tempName, n.Weight, "default", tempXOffset * 200, n.Weight * -150}
 		nodes = append(nodes, tempNode)
 		tempName = ""
 	}
@@ -268,9 +321,59 @@ func (a *Application) repoConcept(c *gin.Context) {
 				missingLevel--
 			}
 			node := tree[sha]
-			nodes = append(nodes, VNode{sha, sha[:7], strings.Join(node.Tags, "\n"), missingLevel, "warning", maxXOffset + 200 + (i/missingSquare)*150, missingLevel * -100})
+			nodes = append(nodes, &VNode{sha, sha[:7], strings.Join(node.Tags, "\n"), missingLevel, "default", maxXOffset + 200 + (i/missingSquare)*150, missingLevel * -100})
 		}
 	}
 
-	c.HTML(200, "repo_overview_concept.html", gin.H{"nodes": nodes, "edges": edges})
+	barrier := make(chan struct{}, len(nodes))
+
+	setColor := func(n *VNode) {
+		if exists, err := checkScanExists(n.Id); err != nil || !exists {
+			n.Group = "bad"
+		} else {
+			n.Group = "good"
+		}
+		barrier <- struct{}{}
+	}
+
+	for _, node := range nodes {
+		go setColor(node)
+	}
+	for i := 0; i < len(nodes); i++ {
+		<-barrier
+	}
+
+	c.HTML(200, "repo_overview_concept.html", gin.H{"nodes": nodes, "edges": edges, "alert": alert.Template(), "all_shas": allShasHtml.Template()})
+}
+
+func (a *Application) repoShowSha(c *gin.Context) {
+	projId := c.Param("proj")
+	repoId := c.Param("repo")
+	var form struct {
+		Back string `form:"button_back"`
+	}
+	if err := c.Bind(&form); err != nil {
+		c.String(400, "Unable to bind form: %s", err.Error())
+		return
+	}
+	if form.Back != "" {
+		c.Redirect(303, u.Format("/repoconcept/%s/%s", projId, repoId))
+		return
+	}
+	sha := c.Param("sha")
+	project, err := a.rtrvr.GetProjectById(projId)
+	if err != nil {
+		c.String(400, "Error getting project: %s", err.Error())
+		return
+	}
+	scan, found, err := project.ScanBySha(sha)
+	if err != nil {
+		c.String(400, "Error getting scan: %s", err.Error())
+		return
+	}
+	if !found {
+		c.String(200, "This sha was not found")
+		return
+	}
+	c.HTML(200, "back.html", gin.H{"data": a.frmttr.formatReportBySha(scan)})
 }

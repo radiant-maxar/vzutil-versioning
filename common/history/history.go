@@ -131,13 +131,20 @@ func (t *HistoryTree) TraverseFrom(root string, dir DIR, weight int, todo func(*
 	}
 }
 
-//RESETS WEIGHTS TO 0
 func (t *HistoryTree) GenerateSubtree(roots []string, dir DIR, depth int) HistoryTree {
 	res := HistoryTree{}
-	t.ResetAllWeights(0)
+	t.ResetAllWeights(-1)
 	for _, root := range roots {
-		t.generateSubtree(res, root, dir, depth)
+		t.CalculateHeights(root, UP, 0)
+		//		t.generateSubtree(res, root, dir, depth)
 	}
+	for s, n := range *t {
+		if n.Weight < depth {
+			res[s] = n.duplicate()
+		}
+	}
+	t.ResetAllWeights(0)
+	res.ResetAllWeights(0)
 	return res
 }
 func (t *HistoryTree) generateSubtree(res HistoryTree, root string, dir DIR, depth int) {

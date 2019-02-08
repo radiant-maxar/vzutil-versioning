@@ -22,7 +22,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	d "github.com/radiant-maxar/vzutil-versioning/common/dependency"
-	"github.com/radiant-maxar/vzutil-versioning/common/table"
 	s "github.com/radiant-maxar/vzutil-versioning/web/app/structs"
 	"github.com/radiant-maxar/vzutil-versioning/web/es/types"
 	u "github.com/radiant-maxar/vzutil-versioning/web/util"
@@ -69,7 +68,7 @@ func (a *Application) reportRefOnProject(c *gin.Context) {
 			if scans, err := project.ScansByRefInProject(form.Ref); err != nil {
 				h["report"] = u.Format("Unable to generate report: %s", err.Error())
 			} else {
-				report := a.reportAtRefWrk(form.Ref, scans, form.ReportType)
+				report := a.frmttr.formatReportByRef(form.Ref, scans, form.ReportType)
 				h["report"] = s.NewHtmlCollection(s.NewHtmlButton("Download CSV", "download_csv", form.Ref, "submit").Style("float:right;"), s.NewHtmlBr(), s.NewHtmlBasic("pre", report)).Template()
 			}
 		}
@@ -165,66 +164,4 @@ func (a *Application) reportAtRefWrkCSV(w *csv.Writer, ref string, deps map[stri
 	default:
 		w.Write([]string{"Unknown report type", typ})
 	}
-}
-
-func (a *Application) reportAtRefWrk(ref string, deps map[string]*types.Scan, typ string) string {
-	buf := bytes.NewBufferString("")
-	switch typ {
-	case "seperate":
-		for name, depss := range deps {
-			projName := "[Error finding project name]"
-			if proj, err := a.rtrvr.GetProjectById(depss.ProjectId); err == nil {
-				projName = proj.DisplayName
-			}
-			buf.WriteString(u.Format("%s at %s in %s\n%s\nFrom %s %s", name, ref, projName, depss.Sha, depss.Scan.Fullname, depss.Scan.Sha))
-			t := table.NewTable(3, len(depss.Scan.Deps))
-			for _, dep := range depss.Scan.Deps {
-				t.Fill(dep.Name, dep.Version, dep.Language.String())
-			}
-			buf.WriteString(u.Format("\n%s\n\n", t.NoRowBorders().SpaceColumn(1).Format().String()))
-		}
-	case "grouped":
-		buf.WriteString(u.Format("All repos at %s\n", ref))
-		noDups := map[string]d.Dependency{}
-		for name, depss := range deps {
-			buf.WriteString(name)
-			buf.WriteString("\n")
-			for _, dep := range depss.Scan.Deps {
-				noDups[dep.String()] = dep
-			}
-		}
-		sorted := make(d.Dependencies, 0, len(noDups))
-		for _, dep := range noDups {
-			sorted = append(sorted, dep)
-		}
-		sort.Sort(sorted)
-		t := table.NewTable(3, len(sorted))
-		for _, dep := range sorted {
-			t.Fill(dep.Name, dep.Version, dep.Language.String())
-		}
-		buf.WriteString(u.Format("\n%s", t.NoRowBorders().SpaceColumn(1).Format().String()))
-	default:
-	}
-	return buf.String()
-}
-
-func (a *Application) reportAtShaWrk(scan *types.Scan) string {
-	buf := bytes.NewBufferString("")
-	projName := "[Error finding project name]"
-	if proj, err := a.rtrvr.GetProjectById(scan.ProjectId); err == nil {
-		projName = proj.DisplayName
-	}
-	buf.WriteString(u.Format("%s at %s in %s\n", scan.RepoFullname, scan.Sha, projName))
-	buf.WriteString(u.Format("Dependencies from %s at %s\n", scan.Scan.Fullname, scan.Scan.Sha))
-	buf.WriteString("Files scanned:\n")
-	for _, f := range scan.Scan.Files {
-		buf.WriteString(f)
-		buf.WriteString("\n")
-	}
-	t := table.NewTable(3, len(scan.Scan.Deps))
-	for _, dep := range scan.Scan.Deps {
-		t.Fill(dep.Name, dep.Version, dep.Language.String())
-	}
-	buf.WriteString(t.NoRowBorders().SpaceColumn(1).Format().String())
-	return buf.String()
 }
