@@ -45,12 +45,13 @@ func NewRetriever(app *Application) *Retriever {
 }
 
 //Test: TestGetScans
-func (p *Project) ScanBySha(sha string) (*types.Scan, bool, error) {
+//func (p *Project) ScanBySha(sha string) (*types.Scan, bool, error) {
+func (r *Repository) ScanBySha(sha string) (*types.Scan, bool, error) {
 	var entry = new(types.Scan)
 	var err error
 	//	var found bool
 
-	result, err := p.index.GetByID(RepositoryEntryType, sha+"-"+p.Id)
+	result, err := r.index.GetByID(RepositoryEntryType, sha+"-"+r.Id)
 	if result == nil {
 		return nil, false, err
 	} else if !result.Found {
@@ -60,7 +61,7 @@ func (p *Project) ScanBySha(sha string) (*types.Scan, bool, error) {
 }
 
 func (r *Retriever) ScanByShaNameGen(repo *Repository, sha string) (*types.Scan, error) {
-	scan, found, err := repo.project.ScanBySha(sha)
+	scan, found, err := repo.ScanBySha(sha)
 	if err != nil || !found {
 		{
 			code, _, _, err := nt.HTTP(nt.HEAD, u.Format("https://github.com/%s/commit/%s", repo.Fullname, sha), nt.NewHeaderBuilder().GetHeader(), nil)

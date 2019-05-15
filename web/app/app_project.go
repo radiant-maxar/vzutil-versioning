@@ -82,15 +82,15 @@ func (a *Application) viewProject(c *gin.Context) {
 			return
 		}
 	} else if form.Sha != "" {
-		scan, found, err := project.ScanBySha(form.Sha)
-		if !found && err != nil {
-			c.String(400, "Unable to find this sha: %s", err.Error())
-			return
-		} else if found && err != nil {
-			c.String(500, "Unable to obtain the results: %s", err.Error())
-			return
-		}
-		depsStr = a.frmttr.formatReportBySha(scan)
+		//		scan, found, err := project.ScanBySha(form.Sha)
+		//		if !found && err != nil {
+		//			c.String(400, "Unable to find this sha: %s", err.Error())
+		//			return
+		//		} else if found && err != nil {
+		//			c.String(500, "Unable to obtain the results: %s", err.Error())
+		//			return
+		//		}
+		//		depsStr = a.frmttr.formatReportBySha(scan)
 	} else if form.Gen != "" {
 		repoFullName := strings.TrimPrefix(form.Gen, "Generate Branch - ")
 		c.Redirect(303, u.Format("/genbranch/%s/%s", projId, repoFullName))

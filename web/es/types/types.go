@@ -93,6 +93,7 @@ const ExactSha CheckoutType = "ExactSha"
 
 type Scan struct {
 	RepoFullname string            `json:"repo"`
+	RepositoryId string            `json:"repo_id"`
 	ProjectId    string            `json:"project_id"`
 	Refs         []string          `json:"refs"`
 	Sha          string            `json:"sha"`
@@ -101,6 +102,7 @@ type Scan struct {
 }
 
 const Scan_FullnameField = "repo"
+const Scan_RepositoryIdField = "repo_id"
 const Scan_ProjectIdField = "project_id"
 const Scan_RefsField = "refs"
 const Scan_ShaField = "sha"
@@ -113,6 +115,7 @@ const ScanMapping string = `{
 	"dynamic":"strict",
 	"properties":{
 		"` + Scan_FullnameField + `":{"type":"keyword"},
+		"` + Scan_RepositoryIdField + `":{"type":"keyword"},
 		"` + Scan_ProjectIdField + `":{"type":"keyword"},
 		"` + Scan_RefsField + `":{"type":"keyword"},
 		"` + Scan_ShaField + `":{"type":"keyword"},

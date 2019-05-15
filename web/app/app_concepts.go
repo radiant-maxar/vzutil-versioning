@@ -367,12 +367,12 @@ func (a *Application) repoShowSha(c *gin.Context) {
 		return
 	}
 	sha := c.Param("sha")
-	project, err := a.rtrvr.GetProjectById(projId)
+	repo, _, err := a.rtrvr.GetRepositoryById(repoId, projId)
 	if err != nil {
 		c.String(400, "Error getting project: %s", err.Error())
 		return
 	}
-	scan, found, err := project.ScanBySha(sha)
+	scan, found, err := repo.ScanBySha(sha)
 	if err != nil {
 		c.String(400, "Error getting scan: %s", err.Error())
 		return

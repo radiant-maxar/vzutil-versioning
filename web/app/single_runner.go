@@ -92,6 +92,7 @@ func (sr *SingleRunner) RunAgainstSingle(printHeader string, printLocation chan 
 	}
 	res := &types.Scan{
 		RepoFullname: request.repository.Fullname,
+		RepositoryId: request.repository.Id,
 		ProjectId:    request.repository.ProjectId,
 		Refs:         []string{request.ref},
 		Sha:          request.sha,

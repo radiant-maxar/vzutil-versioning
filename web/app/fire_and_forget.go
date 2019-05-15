@@ -140,7 +140,7 @@ func (ff *FireAndForget) postScan(scan *types.Scan) {
 		}
 	}
 
-	resp, err := ff.app.index.PostData(RepositoryEntryType, scan.Sha+"-"+scan.ProjectId, scan)
+	resp, err := ff.app.index.PostData(RepositoryEntryType, scan.Sha+"-"+scan.RepositoryId, scan)
 	if err != nil {
 		log.Printf("[ES-WORKER] Unable to create entry %s: %s\n", scan.Sha, err.Error())
 		return
