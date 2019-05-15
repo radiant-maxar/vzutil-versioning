@@ -55,11 +55,11 @@ func main() {
 
 	runInterruptHandler()
 
-	flag.BoolVar(&localMode, "local", false, "Run in local mode")
-	flag.BoolVar(&scan, "scan", false, "Scan for dependency files")
-	flag.BoolVar(&all, "all", false, "Run against all found dependency files")
+	flag.BoolVar(&localMode, "local", false, "Provide local path to git repo")
 	flag.BoolVar(&includeTest, "testing", true, "Include testing dependencies")
-	flag.Var(&files, "f", "Add file to scan")
+	flag.BoolVar(&scan, "scan", false, "[RUN MODE] Scan for dependency files")
+	flag.BoolVar(&all, "all", false, "[RUN MODE] Run against all found dependency files")
+	flag.Var(&files, "f", "[RUN MODE] Add file to scan")
 	flag.Parse()
 	info := flag.Args()
 
